@@ -27,8 +27,8 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        {this.state.currentUser ?
+      <div id="app-div" className="App">
+        {!this.state.currentUser ?
         <LoginForm handleLogin={this.handleLogin} /> :
         <FortuneContainer currentUser={this.state.currentUser} handleLogout={this.handleLogout}/>
       }

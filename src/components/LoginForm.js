@@ -23,7 +23,7 @@ class LoginForm extends React.Component{
   render(){
     return (
       <div>
-        <h1>Enter Your Name to Reveal Your Fate...</h1>
+        <h1 className="text" >Enter Your Name to Reveal Your Fate...</h1>
         <form onSubmit={this.handleLogin} >
           <input onChange={this.handleChange} value={this.state.value}/>
           <button type="submit">Submit</button>
