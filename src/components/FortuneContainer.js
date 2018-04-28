@@ -44,14 +44,16 @@ class FortuneContainer extends React.Component{
     const messages = [
       "Your day will be filled with...",
       "At some point today you will encounter...",
-      "You will be blessed by...",
+      "Today You will be blessed by a...",
       "Much luck will be brought by a...",
       "Don't worry, soon everything will be...",
       "You will end the day feeling like...",
       "Today is the day you will finally...",
       "Watch out! You soon could be...",
-      "Your next project will end up like..."
-
+      "Your next project will end up like...",
+      "You may be surprised today by a...",
+      "Don't give up! Soon everything will be...",
+      "Careful! Today there's a good chance you will encounter..."
     ]
     let index = Math.floor(Math.random() * Math.floor(messages.length))
     return messages[index]
@@ -83,7 +85,7 @@ class FortuneContainer extends React.Component{
   render(){
     return (
       <div className="ui one wide column">
-        <h1>Hello {this.props.currentUser}! Click Below For a Gif Prophecy!</h1>
+        <h1 className="text" >Hello {this.props.currentUser}! Click Below For a Gif Prophecy!</h1>
         {this.state.gif!=='' ?
         <Gif gif={this.state.gif} message={this.state.message}/> : null }
         {this.state.gif!=='' ?
