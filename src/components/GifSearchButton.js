@@ -1,11 +1,11 @@
 import React from 'react'
 
-const GifSearchButton = () => {
+const GifSearchButton = (props) => {
   return (
     <div>
-      <button>Reveal Your Destiny...</button>
+      <button onClick={props.fetchGif}>Reveal Your Destiny...</button>
     </div>
   )
 }
 
-export default GifSearchButton 
+export default GifSearchButton
