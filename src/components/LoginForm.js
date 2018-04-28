@@ -1,4 +1,5 @@
 import React from 'react'
+const URL = 'http://localhost:3000/api/v1/users'
 
 class LoginForm extends React.Component{
   constructor(){
@@ -15,9 +16,41 @@ class LoginForm extends React.Component{
     })
   }
 
+  getUserData = () => {
+    fetch(URL, {
+      headers: {'Content-Type':'application/json'},
+      method: 'get'
+    }).then(res=>res.json()).then(json=>{
+      let user = json.data.find(user=>{
+        return user.attributes.username===this.state.value
+      })
+      if (user!==undefined){
+        let fortunes = json.included.filter(fortune=>{
+          return fortune.attributes["user-id"]===parseInt(user.id)
+        })
+        this.props.handleLogin(user, fortunes)
+      } else {
+        this.postUser()
+        // this.props.handleLogin(this.state.value)
+        // have attributes be passed as optional second arg
+      }
+    })
+  }
+
   handleLogin = (event) => {
     event.preventDefault()
-    this.props.handleLogin(this.state.value)
+    this.getUserData()
+  }
+
+  postUser = () => {
+    console.log("called!")
+    fetch(URL, {
+      headers: {'Content-Type':'application/json'},
+      method: 'post',
+      body: JSON.stringify({username: this.state.value})
+    }).then(res=>res.json()).then(json=>{
+      this.props.handleLogin(json.data)
+    })
   }
 
   render(){

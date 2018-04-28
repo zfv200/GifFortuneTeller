@@ -8,13 +8,22 @@ class App extends Component {
     super()
 
     this.state = {
-      currentUser: null
+      currentUser: null,
+      userFortunes: []
     }
   }
 
-  handleLogin = (newUser) => {
+  handleLogin = (newUser, fortunes=null) => {
+    let currentFortunes = []
+    if (fortunes!==null) {
+      fortunes.map(fortune=>{
+      currentFortunes.push(Object.assign({}, fortune.attributes))
+      })
+    }
+    // let currentFortunes = Object.assign({})
     this.setState({
-      currentUser: newUser
+      currentUser: newUser,
+      userFortunes: currentFortunes
     })
   }
 
@@ -30,7 +39,7 @@ class App extends Component {
       <div id="app-div" className="App">
         {!this.state.currentUser ?
         <LoginForm handleLogin={this.handleLogin} /> :
-        <FortuneContainer currentUser={this.state.currentUser} handleLogout={this.handleLogout}/>
+        <FortuneContainer currentUser={this.state.currentUser} userFortunes={this.state.userFortunes} handleLogout={this.handleLogout}/>
       }
       </div>
     );
