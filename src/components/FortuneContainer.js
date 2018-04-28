@@ -8,6 +8,7 @@ import Gif from './Gif'
 const rating = "&tag=&rating=G"
 const ApiKey = "MPGPPdjxRDhoDBE4DDHYaod6wcifns6l"
 const URL = "http://api.giphy.com/v1/gifs/random?&api_key=" + ApiKey + rating
+const PostURL = "http://localhost:3000/api/v1/fortunes"
 let dateObj = new Date()
 let date = dateObj.toDateString()
 
@@ -24,6 +25,12 @@ class FortuneContainer extends React.Component{
       date: date,
       saved: false
     }
+  }
+
+  componentDidMount(){
+    this.setState({
+      fortunes: this.props.userFortunes
+    })
   }
 
   fetchGif = () => {
@@ -70,6 +77,17 @@ class FortuneContainer extends React.Component{
       fortunes: [...this.state.fortunes, fortuneObj],
       saved: true
     })
+    console.log("I should call this")
+    this.postGif(fortuneObj)
+  }
+
+  postGif = (fortuneObj) => {
+    console.log(fortuneObj)
+    fetch(PostURL, {
+      headers: {'Content-Type':'application/json'},
+      method: 'post',
+      body: JSON.stringify({gif: fortuneObj.gif, message: fortuneObj.message, date: fortuneObj.date, user_id: parseInt(this.props.currentUser.id)})
+    }).then(res=>res.json()).then(json=>console.log(json))
   }
 
   deleteGif = (gifId) => {
@@ -82,10 +100,11 @@ class FortuneContainer extends React.Component{
     })
   }
 
+
   render(){
     return (
       <div className="ui one wide column">
-        <h1 className="text" >Hello {this.props.currentUser}! Click Below For a Gif Prophecy!</h1>
+        <h1 className="text" >Hello {this.props.currentUser.attributes.username}! Click Below For a Gif Prophecy!</h1>
         {this.state.gif!=='' ?
         <Gif gif={this.state.gif} message={this.state.message}/> : null }
         {this.state.gif!=='' ?
