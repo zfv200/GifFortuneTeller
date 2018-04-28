@@ -1,11 +1,15 @@
 import React from 'react'
 import LogoutButton from './LogoutButton'
 import GifSearchButton from './GifSearchButton'
+import SaveGif from './SaveGif'
+import SavedFortuneContainer from './SavedFortuneContainer'
 import Gif from './Gif'
 
 const rating = "&tag=&rating=G"
 const ApiKey = "MPGPPdjxRDhoDBE4DDHYaod6wcifns6l"
 const URL = "http://api.giphy.com/v1/gifs/random?&api_key=" + ApiKey + rating
+let dateObj = new Date()
+let date = dateObj.toDateString()
 
 class FortuneContainer extends React.Component{
   constructor(){
@@ -13,8 +17,12 @@ class FortuneContainer extends React.Component{
 
     this.state = {
       gif: '',
+      gifId: '',
       message: 'Your day will be filled with..',
-      searchMessage: ''
+      searchMessage: '',
+      fortunes: [],
+      date: date,
+      saved: false
     }
   }
 
@@ -25,7 +33,9 @@ class FortuneContainer extends React.Component{
     }).then(res=>res.json()).then(json=>{
       this.setState({
         gif: json.data.fixed_height_downsampled_url,
-        message: this.setMessage()
+        gifId: json.data.id,
+        message: this.setMessage(),
+        saved: false
       })
     })
   }
@@ -47,15 +57,29 @@ class FortuneContainer extends React.Component{
     return messages[index]
   }
 
+  saveGif = () => {
+    let fortuneObj = {
+      gif: this.state.gif,
+      message: this.state.message,
+      id: this.state.gifId,
+      date: this.state.date
+    }
+    this.setState({
+      fortunes: [...this.state.fortunes, fortuneObj],
+      saved: true
+    })
+  }
+
   render(){
     return (
       <div className="ui one wide column">
         <h1>Click Below For a Gif Prophecy!</h1>
-        <div>
         {this.state.gif!=='' ?
         <Gif gif={this.state.gif} message={this.state.message}/> : null }
-        </div>
-        <GifSearchButton fetchGif={this.fetchGif} setMessage={this.setMessage}/>
+        {this.state.gif!=='' ?
+        <SaveGif saved={this.state.saved} saveGif={this.saveGif}/> : null }
+        <GifSearchButton fetchGif={this.fetchGif} gif={this.state.gif}/>
+        <SavedFortuneContainer fortunes={this.state.fortunes}/>
         <LogoutButton handleLogout={this.props.handleLogout}/>
       </div>
     )

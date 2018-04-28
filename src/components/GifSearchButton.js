@@ -3,7 +3,7 @@ import React from 'react'
 const GifSearchButton = (props) => {
   return (
     <div>
-      <button onClick={props.fetchGif}>Reveal Your Destiny...</button>
+      <button onClick={props.fetchGif}>Reveal {props.gif!=='' ? "Another" : null} Fortune!</button>
     </div>
   )
 }
