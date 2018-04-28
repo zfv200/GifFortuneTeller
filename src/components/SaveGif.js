@@ -10,6 +10,6 @@ const SaveGif = (props) => {
     }
     </div>
   )
-} 
+}
 
 export default SaveGif

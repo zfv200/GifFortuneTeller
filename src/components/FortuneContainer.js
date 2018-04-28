@@ -70,16 +70,26 @@ class FortuneContainer extends React.Component{
     })
   }
 
+  deleteGif = (gifId) => {
+    let fortunes = this.state.fortunes
+    let deleted = fortunes.find(fortune=>fortune.id===gifId)
+    // let newFortunes = fortunes.slice().splice(fortunes.indexOf(deleted), 1)
+    let index = fortunes.indexOf(deleted)
+    this.setState({
+      fortunes: [...fortunes.slice(0, index), ...fortunes.slice(index+1)]
+    })
+  }
+
   render(){
     return (
       <div className="ui one wide column">
-        <h1>Click Below For a Gif Prophecy!</h1>
+        <h1>Hello {this.props.currentUser}! Click Below For a Gif Prophecy!</h1>
         {this.state.gif!=='' ?
         <Gif gif={this.state.gif} message={this.state.message}/> : null }
         {this.state.gif!=='' ?
         <SaveGif saved={this.state.saved} saveGif={this.saveGif}/> : null }
         <GifSearchButton fetchGif={this.fetchGif} gif={this.state.gif}/>
-        <SavedFortuneContainer fortunes={this.state.fortunes}/>
+        <SavedFortuneContainer fortunes={this.state.fortunes} deleteGif={this.deleteGif}/>
         <LogoutButton handleLogout={this.props.handleLogout}/>
       </div>
     )
