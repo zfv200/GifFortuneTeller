@@ -49,10 +49,12 @@ class FortuneContainer extends React.Component{
 
   render(){
     return (
-      <div>
+      <div className="ui one wide column">
         <h1>Click Below For a Gif Prophecy!</h1>
+        <div>
         {this.state.gif!=='' ?
         <Gif gif={this.state.gif} message={this.state.message}/> : null }
+        </div>
         <GifSearchButton fetchGif={this.fetchGif} setMessage={this.setMessage}/>
         <LogoutButton handleLogout={this.props.handleLogout}/>
       </div>
