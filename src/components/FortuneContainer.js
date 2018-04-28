@@ -13,7 +13,7 @@ class FortuneContainer extends React.Component{
 
     this.state = {
       gif: '',
-      message: '',
+      message: 'Your day will be filled with..',
       searchMessage: ''
     }
   }
