@@ -5,7 +5,7 @@ import SaveGif from './SaveGif'
 import SavedFortuneContainer from './SavedFortuneContainer'
 import Gif from './Gif'
 
-const rating = "&tag=&rating=G"
+const rating = "&tag=&rating=pg-13"
 const ApiKey = "MPGPPdjxRDhoDBE4DDHYaod6wcifns6l"
 const URL = "http://api.giphy.com/v1/gifs/random?&api_key=" + ApiKey + rating
 const PostURL = "http://localhost:3000/api/v1/fortunes"
@@ -60,7 +60,7 @@ class FortuneContainer extends React.Component{
       "Your next project will end up like...",
       "You may be surprised today by a...",
       "Don't give up! Soon everything will be...",
-      "Careful! Today there's a good chance you will encounter..."
+      "Today there's a good chance you will encounter..."
     ]
     let index = Math.floor(Math.random() * Math.floor(messages.length))
     return messages[index]
